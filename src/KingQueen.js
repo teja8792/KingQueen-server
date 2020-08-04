@@ -79,3 +79,27 @@ function createGame(hostId, characters = null) {
   games.set(newGameId, newGame);
   return newGame;
 }
+
+function updateGame(data) {}
+
+function createPlayer(data) {
+  let nPlayerId = generateID();
+  let nplayer = {
+    id: nPlayerId,
+    displayName: data.displayName ? data.displayName : null,
+    points: data.points ? data.points : 0,
+    currentGameId: data.currentGameId ? data.currentGameId : null,
+    socketId: data.socketId ? data.socketId : null
+  };
+  players.set(nPlayerId, nplayer);
+  return nplayer;
+}
+
+function updatePlayer() {}
+
+module.exports = {
+  createGame,
+  updateGame,
+  createPlayer,
+  updatePlayer
+};
