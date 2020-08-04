@@ -1,3 +1,4 @@
+const DB = require("./DB.js");
 const defaultCharacters = {
   king: {
     label: "King",
@@ -24,6 +25,24 @@ const defaultCharacters = {
     points: 0
   }
 };
+const defaultPlayer = {
+  displayName: null,
+  points: 0,
+  currentGameId: null,
+  socketId: null
+};
+const defaultGame = {
+  characters: [],
+  characterSeq: [],
+  shuffled: [],
+  players: [],
+  hostPlayerId: [],
+  createdAt: null,
+  updatedAt: null,
+  totalPlayedTime: 0
+};
+const players = new DB();
+const games = new DB();
 
 function shuffleArray(array) {
   var currentIndex = array.length,
@@ -49,4 +68,14 @@ function generateID() {
   return Math.random()
     .toString(36)
     .substr(2, 9);
+}
+function createGame(hostId, characters = null) {
+  let newGameId = generateID();
+  let newGame = Object.assign(defaultGame, {
+    id: newGameId,
+    hostPlayerId: hostId,
+    characters: characters ? characters : defaultCharacters
+  });
+  games.set(newGameId, newGame);
+  return newGame;
 }
